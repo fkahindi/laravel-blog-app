@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Faker\Factory as Faker;
 use App\Models\Topic;
 use Illuminate\Database\Seeder;
@@ -19,21 +18,13 @@ class TopicsTableSeeder extends Seeder
         $faker = Faker::create();
 
         Topic::create([
-            'name' => 'HTML',
-            'description' => $faker->paragraph(30),
-            'keywords' => $faker->words(5)
-        ]);
-
-        Topic::create([
-            'name' => 'JavaScript',
-            'description' => $faker->paragraph(30),
-            'keywords' => $faker->words(5)
-        ]);
-
-        Topic::create([
-            'meta_name' => 'PHP',
-            'description' => $faker->paragraph(30),
-            'keywords' => $faker->words(5)
+        'name' => $faker->randomElement([
+            'name'=>'HTML',
+            'name'=>'JavaScript',
+            'name'=>'PHP'
+        ]),
+        'description' => $faker->paragraph(30),
+        'keywords' => $faker->words(5)
         ]);
     }
 }

@@ -49,7 +49,7 @@ class PostController extends Controller
 
         ]);
 
-        return redirect('/blog'. $newPost);
+        return redirect('/blog');
     }
 
     /**

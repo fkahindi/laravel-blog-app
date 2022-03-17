@@ -30,5 +30,11 @@ class Topic extends Model
         $this->attributes['name']= $value;
         $this->attributes['slug']= Str::slug($value);
     }
-
+/**
+ * @return \Illuminiate\Database\Eloquent\Relations\HasMany
+ */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

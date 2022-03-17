@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('topic_id')->index();
-            $table->integer('user_id');
+            $table->unsignedBigInteger('user_id')->index();
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('body');
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->boolean('published')->default(0);
 
             $table->foreign('topic_id')->references('id')->on('topics');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
