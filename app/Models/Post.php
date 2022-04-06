@@ -24,8 +24,8 @@ class Post extends Model
         'title',
         'slug',
         'body',
-        'meta_description',
-        'meta_keywords',
+        'description',
+        'keywords',
         'image',
         'image_caption',
         'published'
@@ -36,8 +36,8 @@ class Post extends Model
      */
     protected $casts = [
         'topic_id' => 'integer',
-        'published' => 'boolean',
-        'user_id' => 'integer'
+        'user_id' => 'integer',
+        'published' => 'boolean'
     ];
 
     /**
@@ -51,10 +51,26 @@ class Post extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function topic()
     {
-        return $this->belongsTo(Topic::class);
+        return $this->belongsTo(Topic::class, 'topic_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

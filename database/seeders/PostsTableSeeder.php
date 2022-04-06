@@ -1,23 +1,24 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Seeders;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Seeder;
+use \App\Models\Post;
 use App\Models\User;
 use App\Models\Topic;
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PostModel>
- */
-class PostFactory extends Factory
+use Faker\Factory as Faker;
+
+class PostTableSeeder extends Seeder
 {
     /**
-     * Define the model's default state.
+     * Run the database seeds.
      *
-     * @return array<string, mixed>
+     * @return void
      */
-    public function definition()
+    public function run()
     {
-        return [
+        $faker = Faker::create();
+        Post::create([
             'topic_id' => Topic::factory(),
             'user_id' => User::factory(), //Generates a User from factory and extracts id
             'title' => $this->faker->sentence, //Generates a fake sentence
@@ -25,6 +26,6 @@ class PostFactory extends Factory
             'body' => $this->faker->paragraph(15), //generates fake 30 paragraphs
             'description' =>$this->faker->sentence,
             'keywords' =>$this->faker->sentence
-        ];
+        ]);
     }
 }
