@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-12 pt-2">
-                <a href="/topic" class="btn btn-outline-primary btn-sm">Go back</a>
+                <a href="/admin/topic/{{ $topic->id }}" class="btn btn-outline-primary btn-sm">Go back</a>
                 <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
                     <h1 class="display-4">Edit Topic</h1>
                     <hr>

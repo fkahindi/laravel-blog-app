@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 @section('title'){{ $pageTitle }} @endsection
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-12 pt-2">
-                <a href="/posts" class="btn btn-outline-primary btn-sm">Go back</a>
+                <a href="/admin/posts" class="btn btn-outline-primary btn-sm">Go back</a>
                 <div class="border rounded mt-5 pl-4 pr-4 pt-4 pb-4">
                     <h1 class="display-4">{{ $pageTitle }}</h1>
                     <p>Fill and submit this form to create a post</p>

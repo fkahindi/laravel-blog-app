@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\BaseController;
+use App\Models\Topic;
 use Illuminate\Http\Request;
 use App\Contracts\PostContract;
-use App\Contracts\TopicContract;
+//use App\Contracts\TopicContract;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Collection;
 
 class PostController extends BaseController
 {
     protected $postRepository;
-    protected $topicRepository;
 
     public function __construct(
-        PostContract $postRepository,
-        TopicContract $topicRepository
+        PostContract $postRepository
     )
     {
         $this->postRepository = $postRepository;
-        $this->topicRepository = $topicRepository;
     }
     /**
      * Display a listing of the resource.
@@ -41,8 +40,8 @@ class PostController extends BaseController
      */
     public function create()
     {
-
-        $topics = $this->topicRepository->listTopics('name', 'asc');
+        $topics = Topic::orderBy('name')->get();
+        //$topics = $this->topicRepository->listTopics('name', 'asc');
 
         $this->setPageTitle('Posts','Create Post');
 
@@ -81,6 +80,7 @@ class PostController extends BaseController
     public function show($id)
     {
         $post = $this->postRepository->findPostById($id);
+        
         return view('/admin.posts.show',['post'=>$post]);
     }
 
@@ -93,7 +93,8 @@ class PostController extends BaseController
     public function edit($id)
     {
         $post = $this->postRepository->findPostById($id)/* ->topic */;
-        $topics = $this->topicRepository->listTopics('name', 'asc');
+        $topics = Topic::orderBy('name')->get();
+        //$topics = $this->topicRepository->listTopics('name', 'asc');
 
         $this->setPageTitle('Posts', 'Edit Post');
         return view('/admin.posts.edit', ['topics'=>$topics, 'post'=>$post]);
