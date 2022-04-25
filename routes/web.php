@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TopicController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,11 +20,11 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::get('/site/posts',[HomeController::class, 'index']);
+Route::get('/site/post/{slug}',[HomeController::class,'show']);
 Route::group(['middleware'=>['auth']], function()
 {
     Route::controller(PostController::class)->group(function(){
-    Route::get('/site/posts', 'index');
     Route::get('/admin/posts','index');
     Route::get('/admin/post/{post}', 'show');
     Route::get('/admin/post/create/post', 'create');

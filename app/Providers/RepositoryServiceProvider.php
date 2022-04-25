@@ -11,7 +11,7 @@ use App\Repositories\TopicRepository;
 class RepositoryServiceProvider extends ServiceProvider
 {
     protected $repositories =[
-        TopicContract::class => TopicRepository::class,
+
         PostContract::class => PostRepository::class
     ];
     /**
