@@ -21,6 +21,9 @@
                 @empty
                     <p class="text-warning">No blog Posts available</p>
                 @endforelse
+                <div class="d-flex">
+                    {{ $posts->links() }}
+                </div>
             </div>
         </div>
     </div>

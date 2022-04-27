@@ -20,6 +20,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/home',function(){
+    return view('home');
+});
 Route::get('/site/posts',[HomeController::class, 'index']);
 Route::get('/site/post/{slug}',[HomeController::class,'show']);
 Route::group(['middleware'=>['auth']], function()

@@ -25,17 +25,18 @@ class HomeController extends BaseController
      */
     public function index()
     {
-        $posts = Post::all();
 
         $this->setPageTitle('Posts', 'List of posts');
 
-        return view('site.posts.index',['posts'=>$posts]);
+        return view('site.posts.index',[
+            'posts' => Post::paginate(10)
+        ]);
     }
 
     public function show()
     {
         $post = Post::find(1);
         $this->setPageTitle('This post','');
-        return view('site.posts.show',['post'=>$post]);
+        return view('site.posts.show',compact('post'));
     }
 }

@@ -2,24 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\BaseController;
-use App\Models\Topic;
-use Illuminate\Http\Request;
-use App\Contracts\PostContract;
-//use App\Contracts\TopicContract;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Http\Controllers\BaseController;
+use App\Models\Post;
+use App\Models\Topic;
+use App\Contracts\PostContract;
 
 class PostController extends BaseController
 {
-    protected $postRepository;
-
-    public function __construct(
-        PostContract $postRepository
-    )
-    {
-        $this->postRepository = $postRepository;
-    }
     /**
      * Display a listing of the resource.
      *
@@ -27,10 +20,9 @@ class PostController extends BaseController
      */
     public function index()
     {
-        $posts = $this->postRepository->listPosts();
 
         $this->setPageTitle('Posts', 'List of all posts');
-        return view('/admin.posts.index',compact('posts'));
+        return view('/admin.posts.index',['posts'=>Post::paginate(10)]);
     }
 
     /**
@@ -40,8 +32,7 @@ class PostController extends BaseController
      */
     public function create()
     {
-        $topics = Topic::orderBy('name')->get();
-        //$topics = $this->topicRepository->listTopics('name', 'asc');
+       $topics = DB::table('topics')->orderBy('name')->get();
 
         $this->setPageTitle('Posts','Create Post');
 
@@ -65,7 +56,9 @@ class PostController extends BaseController
         $params = $request->except('_token');
         $params['slug'] = Str::slug($params['title']);
 
-        $this->postRepository->createPost($params);
+        $post = new Post($params);
+
+        $post->save();
 
         return redirect('/admin/posts');
 
@@ -77,10 +70,9 @@ class PostController extends BaseController
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post )
     {
-        $post = $this->postRepository->findPostById($id);
-        
+
         return view('/admin.posts.show',['post'=>$post]);
     }
 
@@ -90,14 +82,14 @@ class PostController extends BaseController
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = $this->postRepository->findPostById($id)/* ->topic */;
-        $topics = Topic::orderBy('name')->get();
-        //$topics = $this->topicRepository->listTopics('name', 'asc');
+        $topics = DB::table('topics')->orderBy('name')->get();
+
+        $edit_topic = Topic::where('id', $post->topic_id)->value('name');
 
         $this->setPageTitle('Posts', 'Edit Post');
-        return view('/admin.posts.edit', ['topics'=>$topics, 'post'=>$post]);
+        return view('/admin.posts.edit', ['topics'=>$topics, 'edit_topic' => $edit_topic, 'post'=>$post]);
 
     }
 
@@ -108,7 +100,7 @@ class PostController extends BaseController
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Post $post)
     {
         $this->validate($request,[
             'topic_id' => 'required',
@@ -116,9 +108,14 @@ class PostController extends BaseController
             'title' => 'required'
         ]);
 
-        $params = $request->except('_token');
-
-        $this->postRepository->updatePost($params);
+        $post->update([
+            'topic_id' => $request->topic_id,
+            'user_id' => $request->user_id,
+            'title' => $request->title,
+            'body' => $request->body,
+            'description' => $request->description,
+            'keywords' => $request->keywords,
+        ]);
 
         return redirect('/admin/posts');
     }
@@ -129,9 +126,9 @@ class PostController extends BaseController
      * @param  \App\Models\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function delete($id)
+    public function delete(Post $post)
     {
-        $post = $this->postRepository->deletePost($id);
+        $post->delete();
 
         return redirect('/admin/posts');
     }

@@ -38,7 +38,7 @@
                             <div class="control-group col-12">
                                 <label for="topic_id">Topic <span class="m-l-5 text-danger"> *</span></label>
                                 <select id="topic_id" class="form-control" name="topic_id" required>
-                                    <option value="{{ $post->topic_id }}">{{ $post->name }}</option>
+                                    <option value="{{ $post->topic_id }}">{{ $edit_topic }}</option>
                                     @foreach ($topics as $topic )
                                         <option value="{{ $topic->id }}">{{ $topic->name }}</option>
                                     @endforeach
