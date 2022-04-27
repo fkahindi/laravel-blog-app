@@ -20,7 +20,6 @@ class PostController extends BaseController
      */
     public function index()
     {
-
         $this->setPageTitle('Posts', 'List of all posts');
         return view('/admin.posts.index',['posts'=>Post::paginate(10)]);
     }
@@ -88,7 +87,8 @@ class PostController extends BaseController
 
         $edit_topic = Topic::where('id', $post->topic_id)->value('name');
 
-        $this->setPageTitle('Posts', 'Edit Post');
+        $this->setPageTitle('Editing Post', '');
+
         return view('/admin.posts.edit', ['topics'=>$topics, 'edit_topic' => $edit_topic, 'post'=>$post]);
 
     }
