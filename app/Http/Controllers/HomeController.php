@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Http\Controllers\BaseController;
 use App\Models\Post;
 
@@ -33,10 +34,10 @@ class HomeController extends BaseController
         ]);
     }
 
-    public function show()
+    public function show(Post $post)
     {
-        $post = Post::find(1);
+       $comments = Post::find($post->id)->comments;
         $this->setPageTitle('This post','');
-        return view('site.posts.show',compact('post'));
+        return view('site.posts.show',['post'=>$post, 'comments'=>$comments]);
     }
 }

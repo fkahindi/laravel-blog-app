@@ -24,7 +24,7 @@ Route::get('/home',function(){
     return view('home');
 });
 Route::get('/site/posts',[HomeController::class, 'index']);
-Route::get('/site/post/{slug}',[HomeController::class,'show']);
+Route::get('/site/post/{post}',[HomeController::class,'show']);
 Route::group(['middleware'=>['auth']], function()
 {
     Route::controller(PostController::class)->group(function(){
