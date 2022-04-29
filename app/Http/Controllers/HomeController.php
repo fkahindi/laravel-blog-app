@@ -36,8 +36,8 @@ class HomeController extends BaseController
 
     public function show(Post $post)
     {
-       $comments = Post::find($post->id)->comments;
+       //$comments = Post::find($post->id)->comments;
         $this->setPageTitle('This post','');
-        return view('site.posts.show',['post'=>$post, 'comments'=>$comments]);
+        return view('site.posts.show',['post'=>$post /* 'comments'=>$comments] */]);
     }
 }

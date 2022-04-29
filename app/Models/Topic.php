@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 
 class Topic extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * @param $value
      */
-    protected $table = 'topics';
+   // protected $table = 'topics';
+
+    protected $dates =['deleted_at'];
 
     protected $fillable =[
         'name',

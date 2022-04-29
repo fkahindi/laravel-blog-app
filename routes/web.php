@@ -25,6 +25,8 @@ Route::get('/home',function(){
 });
 Route::get('/site/posts',[HomeController::class, 'index']);
 Route::get('/site/post/{post}',[HomeController::class,'show']);
+Route::post('/comments',[CommentController::class,'store'])->name('comments.store');
+
 Route::group(['middleware'=>['auth']], function()
 {
     Route::controller(PostController::class)->group(function(){

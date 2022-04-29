@@ -29,6 +29,7 @@ return new class extends Migration
             $table->foreign('topic_id')->references('id')->on('topics');
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

@@ -1,13 +1,15 @@
-import { cache } from "browserslist";
-
 $('document').ready(function() {
-    let form = $('#comment-post-form');
+    const method = 'POST';
+    const path = "{{ route('comment.post ') }}";
+    let submit = $('#submit');
     let user_id = $('#user_id').val();
     let post_id = $('#post_id').val();
     let comment = $('$comment').val();
 
-    $(form).on('submit', function(e) {
+    $(submit).on('click', function(e) {
         e.preventDefault();
+        alert('You clicked submit');
+        /* e.preventDefault();
         var url = $(this).attr('data-action');
 
         if (comment == '') {
@@ -18,20 +20,28 @@ $('document').ready(function() {
         }
 
         let data = {
-            'submit_comment': 1,
             'user_id': user_id,
             'post_id': post_id,
             'body': comment
         }
-        $.ajax({
-            url: url,
-            method: 'POST',
-            data: new FormData(this),
-
-            success: function(response) {
-                $(form).trigger('reset');
-                $('#comment-area').preppend(data);
-            }
-        });
+        let res = (response) => {
+            $('#comments-area').prepend(data);
+            comment = "";
+            res.forEach(element => {
+                document.writeln(element);
+            });
+        }
+        ajax(data, res); */
     });
+
+    const ajax = async(data, res) => {
+        await $.ajax({
+            url: path,
+            type: method,
+            data: data,
+            success: res
+
+        });
+    }
+
 });
