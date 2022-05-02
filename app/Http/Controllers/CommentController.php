@@ -28,7 +28,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created comments in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -48,11 +48,36 @@ class CommentController extends Controller
         $comment = new Comment($input);
 
         $comment->save();
-        $comment_id = $comment->id;
+        //$comment_id = $comment->id;
 
         return back();
     }
 
+    /**
+     * Store a newly created comments in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function replyStore(Request $request)
+    {
+        $this->validate($request,[
+            'post_id' => 'required|not_in:0',
+            'comment_id' => 'required|not_in:0',
+            'reply_body' => 'required'
+        ]);
+
+        $reply = new Comment;
+
+        $reply->body = $request->get('reply_body');
+        $reply->parent_id = $request->get('comment_id');
+        $reply->post_id = $request->get('post_id');
+        $reply['user_id'] = auth()->user()->id;
+
+        $reply->save();
+
+        return back();
+    }
     /**
      * Display the specified resource.
      *

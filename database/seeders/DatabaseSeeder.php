@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Topic::factory(3)->create();
         \App\Models\Post::factory(10)->create();
         \App\Models\Comment::factory(10)->create();
-        \App\Models\Reply::factory(10)->create();
 
         //$this->call(PostsTableSeeder::class);
     }

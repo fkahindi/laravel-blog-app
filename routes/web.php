@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\TopicController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,8 @@ Route::get('/home',function(){
 });
 Route::get('/site/posts',[HomeController::class, 'index']);
 Route::get('/site/post/{post}',[HomeController::class,'show']);
-Route::post('/comments',[CommentController::class,'store'])->name('comments.store');
+Route::post('/comment/store',[CommentController::class,'store'])->name('comment.add');
+Route::post('/reply/store',[CommentController::class, 'replyStore'])->name('reply.add');
 
 Route::group(['middleware'=>['auth']], function()
 {

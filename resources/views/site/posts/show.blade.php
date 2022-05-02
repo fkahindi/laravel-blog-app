@@ -1,4 +1,9 @@
 @extends('site.layouts.app')
+<style>
+    .display-comment .display-comment {
+        margin-left: 40px
+    }
+</style>
 @section('title'){{ $pageTitle }} @endsection
 @section('content')
     <div class="container">
@@ -8,10 +13,11 @@
                 {!! $post->body !!}
             </div>
         </div><hr>
-        <h4>Display comments</h4>
+        <h4>Comments</h4>
         <hr>
-        @include('site.posts.commentsDisplay',['comments'=> $post->comments,'post_id'=>$post->id])
-            <form method="post" action="{{ route('comments.store') }}">
+        @include('site.layouts.partials._comment_replies',['comments'=>$post->comments, 'post_id'=>$post->id])
+        <hr>
+            <form method="post" action="{{ route('comment.add') }}">
                 @csrf
                 <div class="form-group">
                     <textarea class="form-control" name="body" required></textarea>
@@ -21,19 +27,7 @@
                     <input type="submit" class="btn btn-primary" value="Add Comment" />
                 </div>
             </form>
-        {{-- <div class="row mt-2">
-            <div class="col-12"><hr>
-                <div class="comments-area" id="comments-area">
-                    @foreach ($comments as $comment )
-                        <div class="d-flex" id="{{ $comment->id }}">
-                            <img src="{{ asset('images/profile.png') }}" height="30" alt="user pic">
-                            <p>{{ $comment->body }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </div> --}}
+
     </div>
-    {{-- <script src="{{ asset('/js/ajax/jquery-3.4.0.min.js') }}"></script>
-    <script src="{{ asset('/js/ajax/post-comment.js') }}"></script> --}}
+
 @endsection
