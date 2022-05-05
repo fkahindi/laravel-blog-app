@@ -37,6 +37,7 @@
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Admin Area</a>
                             <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="{{ route('image.add') }}">Add Profile image</a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
@@ -48,7 +49,7 @@
                             </form>
 
                         </div>
-                    </li>
+                    </li><img src="{{ url('public/images/'. auth()->user()->image) }}" height="30" alt="">
                 @endguest
             </ul>
         </div>
