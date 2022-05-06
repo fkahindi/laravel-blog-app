@@ -33,7 +33,7 @@ class PostController extends BaseController
     {
        $topics = DB::table('topics')->orderBy('name')->get();
 
-        $this->setPageTitle('Posts','Create Post');
+        $this->setPageTitle('Create Post','');
 
         return view('/admin.posts.create', ['topics'=>$topics]);
     }
@@ -49,10 +49,24 @@ class PostController extends BaseController
         $this->validate($request,[
             'topic_id' => 'required|not_in:0',
             'user_id' => 'required|not_in:0',
-            'title' => 'required'
+            'title' => 'required',
+            'body' => 'required',
         ]);
 
         $params = $request->except('_token');
+
+        if($request->file('image'))
+        {
+            $request->validate([
+                'image' => 'image|mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
+            ]);
+
+            $file = $request->file('image');
+            $filename = date('dmYHi').$file->getClientOriginalName();
+            $file->move(public_path('images'),$filename);
+            $params['image'] = $filename;
+        }
+
         $params['slug'] = Str::slug($params['title']);
 
         $post = new Post($params);
@@ -87,7 +101,7 @@ class PostController extends BaseController
 
         $edit_topic = Topic::where('id', $post->topic_id)->value('name');
 
-        $this->setPageTitle('Editing Post', '');
+        $this->setPageTitle('Edit Post', '');
 
         return view('/admin.posts.edit', ['topics'=>$topics, 'edit_topic' => $edit_topic, 'post'=>$post]);
 
@@ -105,9 +119,24 @@ class PostController extends BaseController
         $this->validate($request,[
             'topic_id' => 'required',
             'user_id' => 'required',
-            'title' => 'required'
+            'title' => 'required',
+            'body' => 'required',
         ]);
 
+
+        if($request->file('image'))
+        {
+            $request->validate([
+                'image' => 'image|mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
+            ]);
+
+            $file = $request->file('image');
+            $filename = date('dmYHi').$file->getClientOriginalName();
+            $file->move(public_path('images'),$filename);
+            $request['image'] = $filename;
+        }
+
+        //$post->save();
         $post->update([
             'topic_id' => $request->topic_id,
             'user_id' => $request->user_id,
@@ -115,6 +144,8 @@ class PostController extends BaseController
             'body' => $request->body,
             'description' => $request->description,
             'keywords' => $request->keywords,
+            'image' => $request->image,
+            'image_caption' => $request->image_caption,
         ]);
 
         return redirect('/admin/posts');

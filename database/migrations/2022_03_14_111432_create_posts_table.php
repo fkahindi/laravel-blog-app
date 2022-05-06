@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('body');
-            $table->string('description');
-            $table->string('keywords');
+            $table->string('description')->nullable();
+            $table->string('keywords')->nullable();
             $table->string('image')->nullable();
             $table->string('image_caption')->nullable();
             $table->boolean('published')->default(0);
