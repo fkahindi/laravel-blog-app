@@ -4,6 +4,7 @@
 /public/frontend
 /public/backend
 /public/bootstrap-icons
+/public/images
 /storage/*.key
 /vendor
 .env

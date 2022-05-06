@@ -14,10 +14,16 @@
                         <input type="file" class="form-control" required name="image">
                         </div>
 
-                        <div class="post_button">
+                        <div class="post_button mt-2">
                         <button type="submit" class="btn btn-success">Add</button>
                         </div>
                     </form>
+                    <div class="bg-warning my-3 p-3">
+                        <h6 class="cart-text py-2"> <em>Allowed image types : </em> <strong> jpg, jpeg, png, gif and webp</strong>
+                    </h6>
+                    <h6 class="card-foorer"><em>Max image size:</em> <strong>0.25 Mb</strong> </h6>
+                    </div>
+
                 </div>
             </div>
         </div>

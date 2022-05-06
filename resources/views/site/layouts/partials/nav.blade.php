@@ -49,7 +49,7 @@
                             </form>
 
                         </div>
-                    </li><img src="{{ url('public/images/'. auth()->user()->image) }}" height="30" alt="">
+                    </li><img src="{{ url('images/'. auth()->user()->image) }}" height="30" alt="">
                 @endguest
             </ul>
         </div>

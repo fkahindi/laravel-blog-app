@@ -20,7 +20,7 @@ class ImageUploadController extends BaseController
     public function updateImage(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpeg,jpg,png,giv,svg,webp',
+            'image' => 'required|image|mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
         ]);
 
         $user = User::find(auth()->user()->id);
@@ -29,7 +29,7 @@ class ImageUploadController extends BaseController
         {
             $file = $request->file('image');
             $filename = date('dmYHi').$file->getClientOriginalName();
-            $file->move(public_path('public/images'),$filename);
+            $file->move(public_path('images'),$filename);
             $user['image'] = $filename;
         }
         $user->save();
