@@ -27,7 +27,7 @@ class HomeController extends BaseController
     public function index()
     {
 
-        $this->setPageTitle('Posts', 'List of posts');
+        $this->setPageTitle('Posts', 'Latest Post');
 
         return view('site.posts.index',[
             'posts' => Post::paginate(10)
