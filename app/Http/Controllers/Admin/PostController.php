@@ -60,10 +60,10 @@ class PostController extends BaseController
             $request->validate([
                 'image' => 'image|mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
             ]);
-
+//What remains to allow only one filename for a post and updates to replace exisiting one
             $file = $request->file('image');
             $filename = date('dmYHi').$file->getClientOriginalName();
-            $file->move(public_path('images'),$filename);
+            $file->move(public_path('images/posts/images'),$filename);
             $params['image'] = $filename;
         }
 
@@ -127,16 +127,15 @@ class PostController extends BaseController
         if($request->file('image'))
         {
             $request->validate([
-                'image' => 'image|mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
+                'image' => 'mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
             ]);
-
+//What remains to allow only one filename for a post and updates to replace exisiting one
             $file = $request->file('image');
             $filename = date('dmYHi').$file->getClientOriginalName();
-            $file->move(public_path('images'),$filename);
-            $request['image'] = $filename;
+            $file->move(public_path('images/posts/images'),$filename);
+            $post['image'] = $filename;
         }
 
-        //$post->save();
         $post->update([
             'topic_id' => $request->topic_id,
             'user_id' => $request->user_id,
@@ -144,7 +143,7 @@ class PostController extends BaseController
             'body' => $request->body,
             'description' => $request->description,
             'keywords' => $request->keywords,
-            'image' => $request->image,
+            'image' => $post['image'],
             'image_caption' => $request->image_caption,
         ]);
 

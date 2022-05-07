@@ -8,7 +8,7 @@
                 <div class="card border rounded mt-3 pl-4 pr-4 pt-4 pb-4">
                     <div class="card-header"><h1>{{ $pageTitle }}</h1></div>
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form action="" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="control-group mb-2">
                                 <label for="title">Post Title <span class="m-l-5 text-danger"> *</span></label>

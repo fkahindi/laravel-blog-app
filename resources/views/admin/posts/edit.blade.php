@@ -9,7 +9,7 @@
                 <div class="card border rounded mt-3 pl-4 pr-4 pt-4 pb-4">
                     <div class="card-header"><h1>{{ $pageTitle }}</h1></div>
                     <div class="card-body">
-                        <form action="" method="POST">
+                        <form action="" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row">
@@ -33,7 +33,7 @@
                                     <div class="d-flex">
                                         <input type="file" id="image" class="form-control" name="image" placeholder="Select image">
                                         <div class="col-md-6 pl-2 text-center">
-                                            <img src="{{ /* asset('images/profile.png') */$post->image }}" height="40" width="40" alt="post image">
+                                            <img src="{{ asset('/images/posts/images/'.$post->image) }}" height="40" width="40" alt="post image">
                                         </div>
                                     </div>
                                 </div>
