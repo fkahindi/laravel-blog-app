@@ -33,7 +33,7 @@
                                     <div class="d-flex">
                                         <input type="file" id="image" class="form-control" name="image" placeholder="Select image">
                                         <div class="col-md-6 pl-2 text-center">
-                                            <img src="{{ asset('/images/posts/images/'.$post->image) }}" height="40" width="40" alt="post image">
+                                            <img src="{{ asset('/images/posts/'.$post->image) }}" height="40" width="40" alt="post image">
                                         </div>
                                     </div>
                                 </div>
@@ -57,6 +57,7 @@
                                     </select>
                                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                     <input type="hidden" name="id" value="{{ $post->id }}">
+                                    <input type="hidden" name="url" value="{{ url()->previous() }}">
                                 </div>
                             </div>
                             <div class="control-group text-end">

@@ -9,9 +9,11 @@
                     <form method="post" action="{{ route('image.update') }}"
                             enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="url" value="{{ url()->previous() }}">
+                        
                         <div class="image">
                         <label><h4>Add image</h4></label>
-                        <input type="file" class="form-control" required name="image">
+                        <input type="file" class="form-control" name="image" required>
                         </div>
 
                         <div class="post_button mt-2">

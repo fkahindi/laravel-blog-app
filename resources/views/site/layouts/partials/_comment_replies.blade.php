@@ -5,7 +5,7 @@
             <em>{{ date('M d, Y', strtotime($comment->created_at)) }}</em>
         </div>
         <div class="d-flex p-3">
-            <img src="{{ url('images/'.auth()->user()->image) }}" height="30" alt="user pic">
+            <img src="{{ url('images/users/'.auth()->user()->image) }}" height="30" alt="user pic">
             <div class="d-flex-column">
                 <p class="p-2">{{ $comment->body }}</p>
                 <a class="btn btn-link btn-sm" type="button" data-bs-toggle="collapse" href="#replyForm_{{ $comment->id }}" role="button" aria-expanded="false" aria-controls="replyForm_{{ $comment->id }}">Reply</a>

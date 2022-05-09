@@ -55,25 +55,28 @@ class PostController extends BaseController
 
         $params = $request->except('_token');
 
+        $params['slug'] = Str::slug($params['title']);
+
         if($request->file('image'))
         {
             $request->validate([
                 'image' => 'image|mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
             ]);
-//What remains to allow only one filename for a post and updates to replace exisiting one
+
             $file = $request->file('image');
-            $filename = date('dmYHi').$file->getClientOriginalName();
-            $file->move(public_path('images/posts/images'),$filename);
+            $filename = $params['slug'].'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images/posts'),$filename);
+
             $params['image'] = $filename;
         }
-
-        $params['slug'] = Str::slug($params['title']);
 
         $post = new Post($params);
 
         $post->save();
 
-        return redirect('/admin/posts');
+        $url = $request->input('url');
+        return redirect($url)
+            ->with('success', 'Post save successful.');
 
     }
 
@@ -129,10 +132,10 @@ class PostController extends BaseController
             $request->validate([
                 'image' => 'mimes:jpeg,jpg,png,gif,svg,webp|max:250000',
             ]);
-//What remains to allow only one filename for a post and updates to replace exisiting one
+
             $file = $request->file('image');
-            $filename = date('dmYHi').$file->getClientOriginalName();
-            $file->move(public_path('images/posts/images'),$filename);
+            $filename = $post->slug.'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('images/posts'),$filename);
             $post['image'] = $filename;
         }
 
@@ -147,7 +150,10 @@ class PostController extends BaseController
             'image_caption' => $request->image_caption,
         ]);
 
-        return redirect('/admin/posts');
+        $url = $request->input('url');
+
+        return redirect($url)
+            ->with('success', 'Post update successful.');
     }
 
     /**

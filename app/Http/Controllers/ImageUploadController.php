@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BaseController;
 use App\Models\User;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\URL;
 
 class ImageUploadController extends BaseController
 {
@@ -28,37 +30,19 @@ class ImageUploadController extends BaseController
         if($request->file('image'))
         {
             $file = $request->file('image');
-            $filename = date('dmYHi').$file->getClientOriginalName();
-            $file->move(public_path('images'),$filename);
+            $username_arr = explode(' ', $user->name);
+            $username = implode($username_arr);
+
+            $filename = strtolower($username . '-0'. $user->id . '.'. $file->getClientOriginalExtension());
+            $file->move(public_path('images/users'),$filename);
             $user['image'] = $filename;
+
         }
         $user->save();
 
-        return back()
+        $url = $request->input('url');
+
+        return redirect($url)
             ->with('success','Image uploaded successfully.');
-    }
-    /**
-     * display listing of the resource
-     * @return Illuminate\Http\Response
-     */
-    public function imageUploadPost(Request $request)
-    {
-        /* $request->validate([
-            'image' => 'image|mimes:jpeg,jpg,png,giv,svg',
-        ]);
-
-        $imgaName = time().'.'.$request->image->extension();
-
-        $request->image->move(public_path('images'), $imgaName);
- */
-        /* store $imgaName name in database */
-        /* $this->setPageTitle('Image','Upload image');
-
-        $request->User::update([
-            'image'=>'image-path',
-        ]);
-        return back()
-            ->with('success','Image upload was successful.')
-            ->with('image', $imgaName); */
-    }
+    }   
 }

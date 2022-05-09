@@ -49,7 +49,12 @@
                             </form>
 
                         </div>
-                    </li><img src="{{ url('images/'. auth()->user()->image) }}" height="30" alt="">
+                    </li>
+                    @if(file_exists('images/users/'. auth()->user()->image))
+                        <img src="{{ url('images/users/'. auth()->user()->image) }}" height="30" alt="user pic">
+                    @else
+                        <img src="{{ url('images/profile.png') }}" height="30" alt="profile pic">
+                    @endif
                 @endguest
             </ul>
         </div>

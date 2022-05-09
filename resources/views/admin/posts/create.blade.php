@@ -47,6 +47,7 @@
                                     @endforeach
                                 </select>
                                 <input type="hidden" name="user_id" value="1">
+                                <input type="hidden" name="url" value="{{ url()->previous() }}">
                             </div>
                             <div class="control-group text-end">
                                 <button id="btn-submit" class="btn btn-success">
